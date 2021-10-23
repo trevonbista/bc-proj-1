@@ -40,13 +40,13 @@ class Block {
         let self = this;
         return new Promise((resolve, reject) => {
             // Save in auxiliary variable the current block hash
-            const originalHash = self.hash;
+            const originalHash = this.hash;
             // Recalculate the hash of the Block
             // Comparing if the hashes changed
             // Returning the Block is not valid
             const currentHash = SHA256(JSON.stringify(self)).toString();
             // Returning the Block is valid
-            originalHash == currentHash ? resolve(true) : resolve(false);
+            originalHash === currentHash ? resolve(true) : resolve(false);
         });
     }
 
@@ -65,13 +65,10 @@ class Block {
         // Parse the data to an object to be retrieve.
         const decodedBody = hex2ascii(this.body);
         // Resolve with the data if the object isn't the Genesis block
-        return (this.height != 0) ? JSON.parse(decodedBody).body : null;
+        return this.height ? JSON.parse(decodedBody) : null;
 
     }
 
 }
 
 module.exports.Block = Block;                    // Exposing the Block class as a module
-
-// let block = new Block({ body: 'body' });
-// console.log(block.getBData());
