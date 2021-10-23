@@ -1,12 +1,12 @@
 {
-  "name": "project_1",
+  "name": "private_blockchain",
   "version": "1.0.0",
   "description": "This project creates a Blockchain application to store data into the blocks",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Udacity - jose.morales@udacity.com",
+  "author": "bista.trevon@gmail.com",
   "license": "ISC",
   "dependencies": {
     "bitcoinjs-lib": "4.0.3",
