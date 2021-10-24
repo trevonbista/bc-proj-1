@@ -1,3 +1,5 @@
+const e = require("express");
+
 /**
  *          BlockchainController
  *       (Do not change this code)
@@ -17,6 +19,7 @@ class BlockchainController {
         this.submitStar();
         this.getBlockByHash();
         this.getStarsByOwner();
+        this.validateChain();
     }
 
     // Enpoint to Get a Block by Height (GET Endpoint)
@@ -120,9 +123,18 @@ class BlockchainController {
 
     // this endpoint allows to validate the chain
     validateChain() {
-        this.app.get("/validateChain", async (req, res) => {
-            const block = req.body;
-            const invalidBlockInChain = this.blockchain.validateChain(block);
+        this.app.post("/validateChain", async (req, res) => {
+            const { body } = req;
+            if (body) {
+                const chainValidation = this.blockchain.validateChain(body);
+                if (chainValidation.length) {
+                    return res.status(200).json(chainValidation);
+                } else {
+                    return res.status(404).send("No invalid block is found!");
+                }
+            } else {
+                return res.status(404).send("Block Not Found! Review the Parameters!");
+            }
         })
     }
 

@@ -224,10 +224,6 @@ class Blockchain {
                 } catch (error) { }
             })
             resolve(errorLog);
-
-            for (let i = self.chain.length; i--; i > 0) {
-
-            }
         });
     }
 
