@@ -19,7 +19,7 @@ class Block {
     constructor(data) {
         this.hash = null;                                           // Hash of the block
         this.height = 0;                                            // Block Height (consecutive number of each block)
-        this.body = Buffer.from(JSON.stringify(data)).toString('hex');   // Will contain the transactions stored in the block, by default it will encode the data
+        this.body = Buffer.from(JSON.stringify(data)).toString('hex'); // Will contain the transactions stored in the block, by default it will encode the data
         this.time = 0;                                              // Timestamp for the Block creation
         this.previousBlockHash = null;                              // Reference to the previous Block Hash
     }
@@ -40,11 +40,15 @@ class Block {
         let self = this;
         return new Promise((resolve, reject) => {
             // Save in auxiliary variable the current block hash
-            const originalHash = this.hash;
+            const originalHash = self.hash;
+
             // Recalculate the hash of the Block
+            self.hash = null;
+            const currentHash = SHA256(JSON.stringify(self)).toString();
+            self.hash = originalHash;
+
             // Comparing if the hashes changed
             // Returning the Block is not valid
-            const currentHash = SHA256(JSON.stringify(self)).toString();
             // Returning the Block is valid
             originalHash === currentHash ? resolve(true) : resolve(false);
         });
@@ -71,4 +75,4 @@ class Block {
 
 }
 
-module.exports.Block = Block;                    // Exposing the Block class as a module
+module.exports.Block = Block; // Exposing the Block class as a module
